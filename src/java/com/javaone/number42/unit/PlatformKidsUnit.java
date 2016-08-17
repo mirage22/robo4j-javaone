@@ -19,7 +19,6 @@
 package com.javaone.number42.unit;
 
 import com.robo4j.brick.client.enums.RequestCommandEnum;
-import com.robo4j.brick.logging.SimpleLoggingUtil;
 import com.robo4j.brick.platform.ClientPlatformConsumer;
 import com.robo4j.brick.platform.ClientPlatformException;
 import com.robo4j.brick.platform.ClientPlatformProducer;
@@ -90,7 +89,6 @@ public class PlatformKidsUnit extends DefaultUnit implements LegoUnit {
             this.agents = new ArrayList<>();
             this.active = new AtomicBoolean(false);
             this.commandQueue = new LinkedBlockingQueue<>();
-            SimpleLoggingUtil.print(PlatformKidsUnit.class, "init PlatformKids Unit");
 
             final Exchanger<GenericCommand<RequestCommandEnum>> platformExchanger = new Exchanger<>();
             this.agents.add(createAgent("platformAgent",
@@ -112,9 +110,7 @@ public class PlatformKidsUnit extends DefaultUnit implements LegoUnit {
     @Override
     public boolean process(RoboUnitCommand command){
         try {
-            SimpleLoggingUtil.print(PlatformKidsUnit.class, "process command= " + command);
             GenericCommand<RequestCommandEnum> processCommand = (GenericCommand<RequestCommandEnum>) command;
-            SimpleLoggingUtil.print(PlatformKidsUnit.class, "process command = " + processCommand);
             commandQueue.put(processCommand);
             ProcessAgent platformAgent = (ProcessAgent) agents.get(AGENT_PLATFORM_POSITION);
             platformAgent.setActive(true);
